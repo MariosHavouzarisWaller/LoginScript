@@ -14,7 +14,7 @@ public class LoginScript {
         boolean validated = false;
 
         // Loop through whilst validated is true. Validated will become false once count reaches 3
-        while (validated == false && count < 3) {
+        while (!validated && count < 3) {
 
             // Take user inputs
             System.out.println("Please enter your username:");
@@ -22,20 +22,24 @@ public class LoginScript {
             System.out.println("Please enter your password:");
             inputPass = passScanner.nextLine();
 
-            if (inputUser.contains("Admin") && inputPass.contains("Password!")) {
+            // Check to see if the inputs are the correct ones (Admin and Password!)
+            if (inputUser.contains(username) && inputPass.contains(password)) {
                 System.out.println("You have been validated!");
-                validated = true;
+                validated = true;   // This breaks the loop
             }
+            // Checks to see if anything has been entered into the username or password field without triggering anything that would cause the loop to break
             else if ((inputUser.isEmpty() || inputPass.isEmpty()) && count < 2) {
                 System.out.println("Please enter a username or password.");
             }
+            // Checks to see if the inputs are anything other than the correct ones (Admin and Password!)
             else if ((inputUser.contains("") || inputPass.contains("")) && count < 2) {
                 System.out.println("Access not authorised. Please try again.");
-                count++;
+                count++;    // If count iterates to 2 then this else...if will not be run
             }
+            // Runs when count = 2 and the inputs are still wrong
             else {
                 System.out.println("You have been banned!");
-                count++;
+                count++;    // + 1 to count to break the loop
             }
 
         }
